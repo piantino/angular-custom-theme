@@ -1,72 +1,134 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat-core();
 
-$rally-green: #1eb980;
-$rally-dark-green: #045d56;
-$rally-orange: #ff6859;
-$rally-yellow: #ffcf44;
-$rally-purple: #b15dff;
-$rally-blue: #72deff;
-
-$rally-green-palette: (
-  50: #c6fdf2,
-  100: #a6fbe2,
-  200: #8bf4d4,
-  300: #78eced,
-  400: #69e2ac,
-  500: #1eb980,
-  600: #459a6c,
-  700: #367b55,
-  800: #275d39,
-  900: #143821,
-  A100: #8c9eff, // These are from "mat-indigo" and weren't defined in the colors for rally green.
-  A200: #536dfe,
-  A400: #3d5afe,
-  A700: #304ffe,
+$custom-palett-primary: (
+  50: #e7eafb,
+  100: #c5cfe3,
+  200: #a4aec6,
+  300: #838eaa,
+  400: #6b7896,
+  500: #526282,
+  600: #455572,
+  700: #35425c,
+  800: #263147,
+  900: #141e30,
+  A100: #a1aeb4,
+  A200: #8eacbd,
+  A400: #75a3bb,
+  A700: #4D96BE,
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
     200: $dark-primary-text,
-    300: $light-primary-text,
-    400: $light-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
     500: $light-primary-text,
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
     900: $light-primary-text,
     A100: $dark-primary-text,
-    A200: $light-primary-text,
-    A400: $light-primary-text,
-    A700: $light-primary-text,
-  )
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
 );
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$my-dream-app-primary: mat-palette($rally-green-palette);
-$my-dream-app-accent: mat-palette($mat-pink, A200, A100, A400);
+$custom-palette-accent: (
+  50: #e2f7fe,
+  100: #b7ecfb,
+  200: #89e0f7,
+  300: #5dd3f1,
+  400: #42c9eb,
+  500: #39c0e5,
+  600: #33b0d1,
+  700: #2a9bb6,
+  800: #24879d,
+  900: #156470,
+  A100: #ffffff,
+  A200: #e0f6ff,
+  A400: #ade8ff,
+  A700: #93e1ff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
 
-// The warn palette is optional (defaults to red).
-$my-dream-app-warn: mat-palette($mat-red);
+// custom background and foreground palettes
+$custom-dark-theme-background: (
+  status-bar: green,
+  app-bar:    map_get($mat-red, 900),
+  background: map_get($custom-palett-primary, 900),
+  hover:      rgba(white, 0.04),
+  card:       map_get($custom-palett-primary, 800),
+  dialog:     map_get($custom-palett-primary, 800),
+  disabled-button: $white-12-opacity,
+  raised-button: map-get($custom-palett-primary, A100),
+  focused-button: $white-6-opacity,
+  selected-button: map_get($mat-grey, 900),
+  selected-disabled-button: map_get($mat-grey, 800),
+  disabled-button-toggle: black,
+  unselected-chip: map_get($mat-grey, 700),
+  disabled-list-option: black,
+);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$my-dream-app-theme: mat-dark-theme($my-dream-app-primary, $my-dream-app-accent, $my-dream-app-warn);
+$custom-dark-theme-foreground: (
+  base:              yellow,
+  divider:           $white-12-opacity,
+  dividers:          $white-12-opacity,
+  disabled:          rgba(white, 0.3),
+  disabled-button:   rgba(white, 0.3),
+  disabled-text:     rgba(white, 0.3),
+  hint-text:         rgba(white, 0.3),
+  secondary-text:    rgba(white, 0.7),
+  icon:              white,
+  icons:             white,
+  text:              $light-primary-text,
+  slider-min:        white,
+  slider-off:        rgba(white, 0.3),
+  slider-off-active: rgba(white, 0.3),
+);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($my-dream-app-theme);
+@function create-custom-theme($primary, $accent, $warn: mat-palette($mat-red)) {
+  @return (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+    is-dark: true,
+    foreground: $custom-dark-theme-foreground,
+    background: $custom-dark-theme-background,
+  );
+}
 
-/* You can add global styles to this file, and also import other style files */
+// The rest of this is like a normal theme.scss file. The only difference being that we use create-wonky-theme instead of mat-light-theme
+$custom-theme-primary: mat-palette($custom-palett-primary);
+$custom-theme-accent: mat-palette($custom-palette-accent);
+$custom-theme-warn: mat-palette($mat-red);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$custom-theme: create-custom-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+
+@include angular-material-theme($custom-theme);
+
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
